@@ -6,7 +6,7 @@ import logging
 
 from HaydenLibraryReserver import reserve_library
 
-LOGS_DIR = "logs"
+LOGS_DIR = "C:\\Users\\Branden\\AutoLibraryReserver\\logs"
 
 def get_log_filename():
     """Generate a log filename in the format YYYY-MM-DD_logs.txt in the log folder"""
@@ -36,7 +36,6 @@ def run_reserve_library():
     try:
         log_filename = setup_logging()
         redirect_print_to_log(log_filename)
-        print("Running reserve_library")
 
         ROOM_NUMBER = "C19"
         USERNAME = os.getenv("ASU_USER")
@@ -46,28 +45,32 @@ def run_reserve_library():
         now = datetime.now()
         next_available_date = now + timedelta(days=7)
         RESERVE_TIME = next_available_date.replace(hour=13, minute=0, second=0, microsecond=0)
+        print(f"({now}) Running reserve_library...")
 
         reserve_library(ROOM_NUMBER, RESERVE_TIME, USERNAME, PASSWORD, ASU_ID)
 
-        print("Task completed.")
+        now = datetime.now()
+        print(f"{now} Task completed.")
     except Exception as e:
         print(f"Error occurred while running task: {e}")
+        return -1
     finally:
         restore_print()
+    return 0
 
 def main():
     current_date = datetime.now().date()
 
     while True:
-        now = datetime.now()
-        if now.date() != current_date:
+        now = datetime.now().date()
+        if now != current_date:
             try:
                 if run_reserve_library() == 0:
-                    current_date = now.date()
+                    current_date = now
             except Exception as e:
                 # Logs should be recorded in logs file
                 continue
-        time.sleep(60)
+        time.sleep(5)
 
 if __name__ == "__main__":
     main()
