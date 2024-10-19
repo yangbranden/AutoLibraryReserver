@@ -44,7 +44,7 @@ def run_reserve_library():
 
         now = datetime.now()
         next_available_date = now + timedelta(days=7)
-        RESERVE_TIME = next_available_date.replace(hour=13, minute=0, second=0, microsecond=0)
+        RESERVE_TIME = next_available_date.replace(hour=9, minute=0, second=0, microsecond=0)
         print(f"({now}) Running reserve_library...")
 
         reserve_library(ROOM_NUMBER, RESERVE_TIME, USERNAME, PASSWORD, ASU_ID)
@@ -59,10 +59,10 @@ def run_reserve_library():
     return 0
 
 def main():
-    current_date = datetime.now().date()
+    current_date = datetime.now()
 
     while True:
-        now = datetime.now().date()
+        now = datetime.now()
         if now != current_date:
             try:
                 if run_reserve_library() == 0:
