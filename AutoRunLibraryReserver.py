@@ -3,8 +3,30 @@ import sys
 import os
 from datetime import datetime, timedelta
 import logging
+from enum import Enum
 
 from HaydenLibraryReserver import reserve_library
+
+class StudyRoom(Enum):
+    # Enum members for room numbers
+    ROOM_311A = "311A"
+    ROOM_311B = "311B"
+    ROOM_311C = "311C"
+    ROOM_336 = "336"
+    ROOM_342 = "342"
+    ROOM_351 = "351"
+    ROOM_353 = "353"
+    ROOM_355 = "355"
+    ROOM_357 = "357"
+    ROOM_C13 = "C13"
+    ROOM_C15 = "C15"
+    ROOM_C17 = "C17"
+    ROOM_C19 = "C19"
+    ROOM_C38 = "C38"
+    ROOM_C40 = "C40"
+    ROOM_L52 = "L52"
+    ROOM_L54 = "L54"
+    ROOM_L56 = "L56"
 
 LOGS_DIR = "C:\\Users\\Branden\\AutoLibraryReserver\\logs"
 
@@ -32,19 +54,22 @@ def restore_print():
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
 
-def run_reserve_library():
+def run_reserve_library(room_number: StudyRoom, hour: int):
     try:
         log_filename = setup_logging()
         redirect_print_to_log(log_filename)
 
-        ROOM_NUMBER = "C19"
+        ROOM_NUMBER = room_number.value
         USERNAME = os.getenv("ASU_USER")
         PASSWORD = os.getenv("ASU_PASS")
         ASU_ID = os.getenv("ASU_ID")
 
+        if USERNAME is None or PASSWORD is None or ASU_ID is None:
+            raise Exception("Environment variables not properly set.")
+
         now = datetime.now()
         next_available_date = now + timedelta(days=7)
-        RESERVE_TIME = next_available_date.replace(hour=9, minute=0, second=0, microsecond=0)
+        RESERVE_TIME = next_available_date.replace(hour=hour, minute=0, second=0, microsecond=0)
         print(f"({now}) Running reserve_library...")
 
         reserve_library(ROOM_NUMBER, RESERVE_TIME, USERNAME, PASSWORD, ASU_ID)
@@ -59,13 +84,16 @@ def run_reserve_library():
     return 0
 
 def main():
+    ROOM_NUMBER = StudyRoom.ROOM_C19
+    HOUR = 9
+
     current_date = datetime.now().date()
 
     while True:
         now = datetime.now().date()
         if now != current_date:
             try:
-                if run_reserve_library() == 0:
+                if run_reserve_library(ROOM_NUMBER, HOUR) == 0:
                     current_date = now
             except Exception as e:
                 # Logs should be recorded in logs file
