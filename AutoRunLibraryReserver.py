@@ -59,10 +59,10 @@ def run_reserve_library():
     return 0
 
 def main():
-    current_date = datetime.now()
+    current_date = datetime.now().date()
 
     while True:
-        now = datetime.now()
+        now = datetime.now().date()
         if now != current_date:
             try:
                 if run_reserve_library() == 0:
@@ -70,7 +70,7 @@ def main():
             except Exception as e:
                 # Logs should be recorded in logs file
                 continue
-        time.sleep(5)
+        time.sleep(15)
 
 if __name__ == "__main__":
     main()
