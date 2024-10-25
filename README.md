@@ -2,6 +2,6 @@
 
 Python Selenium script to automatically reserve Hayden Library study room
 
-hehehe
+this is probably against TOS or something but idk I thought it was useful
 
-I am very bored, sorry lol
+so if i'm doing something I'm supposed to be, then sorry! hehe
