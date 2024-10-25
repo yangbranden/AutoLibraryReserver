@@ -22,15 +22,16 @@ def reserve_library(room_number, reserve_time, username, password, asu_id):
 
     driver.get("https://asu.libcal.com/reserve/hayden-study")
 
-    print("Finding date...")
-    while reserve_time.strftime("%A, %B %d, %Y") not in driver.page_source:
+    time_str = reserve_time.strftime("%A, %B") + f" {reserve_time.day}, {reserve_time.year}"
+    print(f"Finding date ({time_str})...")
+    while time_str not in driver.page_source:
         print("clicking Next button")
         button = driver.find_element(By.XPATH, '//button[@class="fc-next-button btn btn-default btn-sm"]')
         button.click()
     a_tags = driver.find_elements(By.TAG_NAME, 'a')
 
     print("Checking if time is available...")
-    time_format = "%I:%M %p %A, %B %d, %Y"
+    time_format = "%I:%M %p %A, %B" + f" {reserve_time.day}, {reserve_time.year}"
     time_wanted = reserve_time.strftime(time_format).replace("AM", "am").replace("PM", "pm")
     test = ""
     for a_tag in a_tags:
