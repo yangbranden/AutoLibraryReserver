@@ -30,9 +30,9 @@ def reserve_library(room_number, reserve_time, username, password, asu_id):
         button.click()
     a_tags = driver.find_elements(By.TAG_NAME, 'a')
 
-    print("Checking if time is available...")
     time_format = "%I:%M %p %A, %B" + f" {reserve_time.day}, {reserve_time.year}"
     time_wanted = reserve_time.strftime(time_format).replace("AM", "am").replace("PM", "pm")
+    print(f"Checking if time is available ({time_wanted})...")
     test = ""
     for a_tag in a_tags:
         test = a_tag.get_attribute('title')
