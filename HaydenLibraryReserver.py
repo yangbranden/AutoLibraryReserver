@@ -46,7 +46,7 @@ def reserve_library(room_number, reserve_time, username, password, asu_id):
                 break
 
     print("Submitting times...")
-    wait = WebDriverWait(driver, 30)
+    wait = WebDriverWait(driver, 300)
     button = wait.until(EC.element_to_be_clickable((By.ID, "submit_times")))
     button.click()
 
