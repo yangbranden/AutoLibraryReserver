@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 import sys
 import os
 import logging
+import time
 logging.getLogger('selenium').setLevel(logging.WARNING)
 
 # HAYDEN_LIBRARY_WEBSITE = "https://asu.libcal.com/reserve/hayden-study" # "https://asu.libcal.com/space/108068"
@@ -28,6 +29,8 @@ def reserve_library(room_number, reserve_time, username, password, asu_id):
         print("clicking Next button")
         button = driver.find_element(By.XPATH, '//button[@class="fc-next-button btn btn-default btn-sm"]')
         button.click()
+    
+    time.sleep(5) # Wait a bit before grabbing elements (too fast)
     a_tags = driver.find_elements(By.TAG_NAME, 'a')
 
     time_format = "%I:%M %p %A, %B" + f" {reserve_time.day}, {reserve_time.year}"
@@ -37,7 +40,7 @@ def reserve_library(room_number, reserve_time, username, password, asu_id):
     for a_tag in a_tags:
         test = a_tag.get_attribute('title')
         if room_number in test:
-            print(test)
+            print("Searching for time:", test)
             if time_wanted in test:
                 if "Unavailable" in test:
                     print("Time unavailable.")

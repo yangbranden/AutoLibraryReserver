@@ -83,7 +83,7 @@ def run_reserve_library(room_number: StudyRoom, hour: int):
         restore_print()
     return 0
 
-def schedule(mon=9,tues=10,wed=9,thurs=10,fri=13,sat=13,sun=13):
+def schedule(mon=20,tues=20,wed=20,thurs=20,fri=20,sat=20,sun=20):
     day_of_week = datetime.now().weekday()
 
     hour = 9
@@ -106,7 +106,7 @@ def schedule(mon=9,tues=10,wed=9,thurs=10,fri=13,sat=13,sun=13):
 
 def main():
     ROOM_NUMBER = StudyRoom.ROOM_C19
-    HOUR = schedule(mon=9,tues=10,wed=9,thurs=10,fri=13,sat=13,sun=13)
+    HOUR = schedule(mon=20,tues=20,wed=20,thurs=20,fri=20,sat=20,sun=20)
 
     current_date = datetime.now().date()
 
@@ -114,7 +114,7 @@ def main():
         now = datetime.now().date()
         if now != current_date:
             try:
-                HOUR = schedule(mon=9,tues=10,wed=9,thurs=10,fri=13,sat=13,sun=13)
+                HOUR = schedule(mon=20,tues=20,wed=20,thurs=20,fri=20,sat=20,sun=20)
                 if run_reserve_library(ROOM_NUMBER, HOUR) == 0:
                     current_date = now
             except Exception as e:
