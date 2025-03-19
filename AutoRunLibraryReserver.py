@@ -1,8 +1,9 @@
 import time
 import sys
 import os
-from datetime import datetime, timedelta
 import logging
+import random
+from datetime import datetime, timedelta
 from enum import Enum
 
 from HaydenLibraryReserver import reserve_library
@@ -105,13 +106,15 @@ def schedule(mon=20,tues=20,wed=20,thurs=20,fri=20,sat=20,sun=20):
     return hour
 
 def main():
-    ROOM_NUMBER = StudyRoom.ROOM_C19
+    ROOM_NUMBER = random.choice([StudyRoom.ROOM_C19, StudyRoom.ROOM_C17, StudyRoom.ROOM_C15, StudyRoom.ROOM_C13])
+    print(ROOM_NUMBER)
+
     HOUR = schedule(mon=20,tues=20,wed=20,thurs=20,fri=20,sat=20,sun=20)
 
-    current_date = datetime.now().date()
+    current_date = datetime.now()#.date()
 
     while True:
-        now = datetime.now().date()
+        now = datetime.now()#.date()
         if now != current_date:
             try:
                 HOUR = schedule(mon=20,tues=20,wed=20,thurs=20,fri=20,sat=20,sun=20)

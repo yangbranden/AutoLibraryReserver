@@ -60,7 +60,7 @@ def reserve_library(room_number, reserve_time, username, password, asu_id):
     password_field = wait.until(EC.presence_of_element_located((By.ID, "password")))
     password_field.send_keys(password)
 
-    login_button = wait.until(EC.element_to_be_clickable((By.NAME, "submit")))
+    login_button = wait.until(EC.element_to_be_clickable((By.NAME, "submitBtn")))
     login_button.click()
 
     print("Waiting for Duo push to be confirmed...")
