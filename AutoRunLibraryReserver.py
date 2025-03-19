@@ -111,10 +111,10 @@ def main():
 
     HOUR = schedule(mon=20,tues=20,wed=20,thurs=20,fri=20,sat=20,sun=20)
 
-    current_date = datetime.now()#.date()
+    current_date = datetime.now().date()
 
     while True:
-        now = datetime.now()#.date()
+        now = datetime.now().date()
         if now != current_date:
             try:
                 HOUR = schedule(mon=20,tues=20,wed=20,thurs=20,fri=20,sat=20,sun=20)
